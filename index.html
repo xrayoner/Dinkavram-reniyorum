@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8. Sınıf Din Kültürü 1. ve 2. Ünite Kavram Testi</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1 { text-align: center; }
+        .question { margin-bottom: 20px; }
+        .multiple-choice { margin-left: 20px; }
+        .feedback { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+    </style>
+    <script>
+        const answerKey = {
+            // 1. Ünite
+            1: { type: 'text', keywords: ['allah', 'ezel', 'ebed', 'bil', 'takdir', 'plan'] }, // Kader
+            2: { type: 'multiple', correct: 'a' },
+            3: { type: 'text', keywords: ['allah', 'sonsuz', 'irade', 'kapsamlı'] }, // Küllî irade
+            4: { type: 'multiple', correct: 'b' },
+            5: { type: 'text', keywords: ['allah', 'evren', 'değişmez', 'yasa', 'kural'] }, // Sünnetullah
+            6: { type: 'multiple', correct: 'a' },
+            7: { type: 'text', keywords: ['allah', 'ver', 'geçim', 'yiyecek', 'rızk'] }, // Rızık
+            8: { type: 'multiple', correct: 'a' },
+            9: { type: 'text', keywords: ['nasip', 'pay', 'kısmet', 'ayrıl'] }, // Kısmet
+            10: { type: 'multiple', correct: 'a' },
+            11: { type: 'text', keywords: ['iyi', 'iyilik', 'hayır'] }, // Hayır
+            12: { type: 'multiple', correct: 'a' },
+            13: { type: 'text', keywords: ['güç', 'kuvvet', 'kudret', 'allah'] }, // Kudret
+            14: { type: 'multiple', correct: 'a' },
+            15: { type: 'text', keywords: ['hak', 'hakkaniyet', 'adalet', 'deng'] }, // Adalet
+            16: { type: 'multiple', correct: 'a' },
+            17: { type: 'text', keywords: ['yüküm', 'sorumlu', 'hesap', 'mükellef'] }, // Sorumluluk
+            18: { type: 'multiple', correct: 'a' },
+            19: { type: 'text', keywords: ['fizik', 'yasa', 'kural', 'doğa'] }, // Fiziksel Yasalar
+            20: { type: 'multiple', correct: 'a' },
+            21: { type: 'text', keywords: ['toplum', 'yasa', 'kural', 'sosyal'] }, // Toplumsal Yasalar
+            22: { type: 'multiple', correct: 'a' },
+            23: { type: 'text', keywords: ['kader', 'program', 'plan', 'takdir'] }, // Kader Programı
+            24: { type: 'multiple', correct: 'a' },
+            25: { type: 'text', keywords: ['her şey', 'ölçü', 'deng', 'yarat'] }, // Allah Her Şeyi Bir Ölçüye Göre Yaratmıştır
+
+            // 2. Ünite
+            26: { type: 'text', keywords: ['zekat', 'zengin', 'mal', 'fakir', 'ver', 'ibadet'] }, // Zekât
+            27: { type: 'multiple', correct: 'a' },
+            28: { type: 'text', keywords: ['infak', 'allah', 'yol', 'harc', 'ver'] }, // İnfak
+            29: { type: 'multiple', correct: 'a' },
+            30: { type: 'text', keywords: ['fitre', 'sadaka', 'fıtr', 'ramazan', 'bayram'] }, // Fitre
+            31: { type: 'multiple', correct: 'a' },
+            32: { type: 'text', keywords: ['muellefe', 'kulub', 'kalp', 'isındır', 'islam'] }, // Müellefe-i Kulûb
+            33: { type: 'multiple', correct: 'a' },
+            34: { type: 'text', keywords: ['miskin', 'yoksul', 'çalış', 'ihtiyaç'] }, // Miskin
+            35: { type: 'multiple', correct: 'a' },
+            36: { type: 'text', keywords: ['rikab', 'köle', 'azad', 'hür'] }, // Rikab
+            37: { type: 'multiple', correct: 'a' },
+            38: { type: 'text', keywords: ['fisebilillah', 'allah', 'yol', 'cihad'] }, // Fîsebilillah
+            39: { type: 'multiple', correct: 'a' },
+            40: { type: 'text', keywords: ['cimri', 'pinti', 'verme', 'tut'] }, // Cimrilik
+            41: { type: 'multiple', correct: 'a' },
+            42: { type: 'text', keywords: ['rızk', 'geçim', 'allah', 'ver'] }, // Rızk
+            43: { type: 'multiple', correct: 'a' },
+            44: { type: 'text', keywords: ['arın', 'temiz', 'zekat', 'sadaka'] }, // Arınma
+            45: { type: 'multiple', correct: 'a' },
+            46: { type: 'text', keywords: ['yardım', 'destek', 'birlik'] }, // Yardımlaşma
+            47: { type: 'multiple', correct: 'a' },
+            48: { type: 'text', keywords: ['zekat', 'ver', 'yer', 'fakir', 'miskin', 'amil'] }, // Zekâtın Verileceği Yerler
+            49: { type: 'multiple', correct: 'a' },
+            50: { type: 'text', keywords: ['islam', 'paylaş', 'yardım', 'dayanış', 'kardeş'] } // İslam'da Paylaşma ve Yardımlaşma
+        };
+
+        function checkAnswer(questionId) {
+            const q = answerKey[questionId];
+            const feedback = document.getElementById('feedback' + questionId);
+            if (q.type === 'multiple') {
+                const selected = document.querySelector(`input[name="q${questionId}"]:checked`);
+                if (selected) {
+                    if (selected.value === q.correct) {
+                        feedback.textContent = 'Doğru!';
+                        feedback.className = 'feedback';
+                    } else {
+                        feedback.textContent = 'Yanlış!';
+                        feedback.className = 'error';
+                    }
+                } else {
+                    feedback.textContent = 'Lütfen bir seçenek seçin.';
+                    feedback.className = 'error';
+                }
+            } else if (q.type === 'text') {
+                const input = document.getElementById('text' + questionId).value.toLowerCase();
+                let correct = false;
+                for (let keyword of q.keywords) {
+                    if (input.includes(keyword)) {
+                        correct = true;
+                        break;
+                    }
+                }
+                if (correct) {
+                    feedback.textContent = 'Doğru!';
+                    feedback.className = 'feedback';
+                } else {
+                    feedback.textContent = 'Yanlış! Daha doğru kelimeler kullanın.';
+                    feedback.className = 'error';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>8. Sınıf Din Kültürü ve Ahlak Bilgisi - 1. ve 2. Ünite 50 Soruluk Kavram Testi</h1>
+    <p>Bu testte kavramların anlamlarını ya yazarak ya da işaretleyerek cevaplayın. Her sorunun altında "Kontrol Et" butonu var. Cevabınızı girdikten sonra tıklayın, doğru mu yanlış mı söyleyecek. Yazılı cevaplar için belirli anahtar kelimeler (örneğin, infak için "allah yolunda harcama" gibi ifadeler) geçiyorsa doğru kabul eder.</p>
+
+    <!-- Unit 1 Questions -->
+    <h2>1. Ünite: Kader İnancı</h2>
+
+    <div class="question">
+        <p>1. Kader nedir? (Anlamını yazın)</p>
+        <textarea id="text1" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(1)">Kontrol Et</button>
+        <span id="feedback1"></span>
+    </div>
+
+    <div class="question">
+        <p>2. Kaza kavramı aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q2" value="a"> a) Allah'ın ezelde takdir ettiği şeylerin zamanı gelince gerçekleşmesi<br>
+            <input type="radio" name="q2" value="b"> b) İnsan iradesi<br>
+            <input type="radio" name="q2" value="c"> c) Evrensel yasalar<br>
+            <input type="radio" name="q2" value="d"> d) Rızık
+        </div>
+        <button onclick="checkAnswer(2)">Kontrol Et</button>
+        <span id="feedback2"></span>
+    </div>
+
+    <div class="question">
+        <p>3. Küllî irade nedir? (Anlamını yazın)</p>
+        <textarea id="text3" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(3)">Kontrol Et</button>
+        <span id="feedback3"></span>
+    </div>
+
+    <div class="question">
+        <p>4. Cüzî irade aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q4" value="a"> a) Allah'ın sonsuz iradesi<br>
+            <input type="radio" name="q4" value="b"> b) İnsanın sınırlı özgür iradesi<br>
+            <input type="radio" name="q4" value="c"> c) Kader planı<br>
+            <input type="radio" name="q4" value="d"> d) Sünnetullah
+        </div>
+        <button onclick="checkAnswer(4)">Kontrol Et</button>
+        <span id="feedback4"></span>
+    </div>
+
+    <div class="question">
+        <p>5. Sünnetullah nedir? (Anlamını yazın)</p>
+        <textarea id="text5" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(5)">Kontrol Et</button>
+        <span id="feedback5"></span>
+    </div>
+
+    <div class="question">
+        <p>6. Ecel kavramı aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q6" value="a"> a) Ömür süresi<br>
+            <input type="radio" name="q6" value="b"> b) Rızık<br>
+            <input type="radio" name="q6" value="c"> c) Tevekkül<br>
+            <input type="radio" name="q6" value="d"> d) Hayır
+        </div>
+        <button onclick="checkAnswer(6)">Kontrol Et</button>
+        <span id="feedback6"></span>
+    </div>
+
+    <div class="question">
+        <p>7. Rızık nedir? (Anlamını yazın)</p>
+        <textarea id="text7" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(7)">Kontrol Et</button>
+        <span id="feedback7"></span>
+    </div>
+
+    <div class="question">
+        <p>8. Tevekkül aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q8" value="a"> a) Allah'a güvenmek ve dayanmak<br>
+            <input type="radio" name="q8" value="b"> b) İnsan iradesini kullanmamak<br>
+            <input type="radio" name="q8" value="c"> c) Kaderi değiştirmek<br>
+            <input type="radio" name="q8" value="d"> d) Şer olaylar
+        </div>
+        <button onclick="checkAnswer(8)">Kontrol Et</button>
+        <span id="feedback8"></span>
+    </div>
+
+    <div class="question">
+        <p>9. Kısmet nedir? (Anlamını yazın)</p>
+        <textarea id="text9" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(9)">Kontrol Et</button>
+        <span id="feedback9"></span>
+    </div>
+
+    <div class="question">
+        <p>10. Nasip aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q10" value="a"> a) Kişiye ayrılan pay<br>
+            <input type="radio" name="q10" value="b"> b) Evrensel yasalar<br>
+            <input type="radio" name="q10" value="c"> c) Cüzî irade<br>
+            <input type="radio" name="q10" value="d"> d) Kudret
+        </div>
+        <button onclick="checkAnswer(10)">Kontrol Et</button>
+        <span id="feedback10"></span>
+    </div>
+
+    <div class="question">
+        <p>11. Hayır nedir? (Anlamını yazın)</p>
+        <textarea id="text11" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(11)">Kontrol Et</button>
+        <span id="feedback11"></span>
+    </div>
+
+    <div class="question">
+        <p>12. Şer kavramı aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q12" value="a"> a) Kötülük<br>
+            <input type="radio" name="q12" value="b"> b) İyilik<br>
+            <input type="radio" name="q12" value="c"> c) Rızık<br>
+            <input type="radio" name="q12" value="d"> d) Ecel
+        </div>
+        <button onclick="checkAnswer(12)">Kontrol Et</button>
+        <span id="feedback12"></span>
+    </div>
+
+    <div class="question">
+        <p>13. Kudret nedir? (Anlamını yazın)</p>
+        <textarea id="text13" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(13)">Kontrol Et</button>
+        <span id="feedback13"></span>
+    </div>
+
+    <div class="question">
+        <p>14. Hikmet aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q14" value="a"> a) Bilgelik, her şeyin bir amaca göre yaratılması<br>
+            <input type="radio" name="q14" value="b"> b) İnsan iradesi<br>
+            <input type="radio" name="q14" value="c"> c) Kaza<br>
+            <input type="radio" name="q14" value="d"> d) Tevekkül
+        </div>
+        <button onclick="checkAnswer(14)">Kontrol Et</button>
+        <span id="feedback14"></span>
+    </div>
+
+    <div class="question">
+        <p>15. Adalet nedir? (Anlamını yazın)</p>
+        <textarea id="text15" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(15)">Kontrol Et</button>
+        <span id="feedback15"></span>
+    </div>
+
+    <div class="question">
+        <p>16. İrade kavramı aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q16" value="a"> a) İsteme, dileme gücü<br>
+            <input type="radio" name="q16" value="b"> b) Rızık<br>
+            <input type="radio" name="q16" value="c"> c) Şer<br>
+            <input type="radio" name="q16" value="d"> d) Sünnetullah
+        </div>
+        <button onclick="checkAnswer(16)">Kontrol Et</button>
+        <span id="feedback16"></span>
+    </div>
+
+    <div class="question">
+        <p>17. Sorumluluk nedir? (Anlamını yazın)</p>
+        <textarea id="text17" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(17)">Kontrol Et</button>
+        <span id="feedback17"></span>
+    </div>
+
+    <div class="question">
+        <p>18. Levh-i Mahfuz aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q18" value="a"> a) Korunmuş levha, kaderin yazılı olduğu yer<br>
+            <input type="radio" name="q18" value="b"> b) İnsan iradesi<br>
+            <input type="radio" name="q18" value="c"> c) Evrensel yasalar<br>
+            <input type="radio" name="q18" value="d"> d) Hayır
+        </div>
+        <button onclick="checkAnswer(18)">Kontrol Et</button>
+        <span id="feedback18"></span>
+    </div>
+
+    <div class="question">
+        <p>19. Fiziksel Yasalar nedir? (Anlamını yazın)</p>
+        <textarea id="text19" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(19)">Kontrol Et</button>
+        <span id="feedback19"></span>
+    </div>
+
+    <div class="question">
+        <p>20. Biyolojik Yasalar aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q20" value="a"> a) Canlıların tabi olduğu kurallar<br>
+            <input type="radio" name="q20" value="b"> b) Toplumsal yasalar<br>
+            <input type="radio" name="q20" value="c"> c) Kader<br>
+            <input type="radio" name="q20" value="d"> d) Kaza
+        </div>
+        <button onclick="checkAnswer(20)">Kontrol Et</button>
+        <span id="feedback20"></span>
+    </div>
+
+    <div class="question">
+        <p>21. Toplumsal Yasalar nedir? (Anlamını yazın)</p>
+        <textarea id="text21" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(21)">Kontrol Et</button>
+        <span id="feedback21"></span>
+    </div>
+
+    <div class="question">
+        <p>22. Evrensel Yasalar aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q22" value="a"> a) Allah'ın koyduğu değişmez kurallar<br>
+            <input type="radio" name="q22" value="b"> b) İnsan iradesi<br>
+            <input type="radio" name="q22" value="c"> c) Rızık<br>
+            <input type="radio" name="q22" value="d"> d) Ecel
+        </div>
+        <button onclick="checkAnswer(22)">Kontrol Et</button>
+        <span id="feedback22"></span>
+    </div>
+
+    <div class="question">
+        <p>23. Kader Programı nedir? (Anlamını yazın)</p>
+        <textarea id="text23" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(23)">Kontrol Et</button>
+        <span id="feedback23"></span>
+    </div>
+
+    <div class="question">
+        <p>24. İnsan İradesi ve Kader ilişkisi aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q24" value="a"> a) İnsan seçim yapar, Allah yaratır<br>
+            <input type="radio" name="q24" value="b"> b) Tamamen kader belirler<br>
+            <input type="radio" name="q24" value="c"> c) İrade yok sayılır<br>
+            <input type="radio" name="q24" value="d"> d) Sadece hayır vardır
+        </div>
+        <button onclick="checkAnswer(24)">Kontrol Et</button>
+        <span id="feedback24"></span>
+    </div>
+
+    <div class="question">
+        <p>25. Allah Her Şeyi Bir Ölçüye Göre Yaratmıştır ifadesi ne anlama gelir? (Anlamını yazın)</p>
+        <textarea id="text25" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(25)">Kontrol Et</button>
+        <span id="feedback25"></span>
+    </div>
+
+    <!-- Unit 2 Questions -->
+    <h2>2. Ünite: Zekât ve Sadaka</h2>
+
+    <div class="question">
+        <p>26. Zekât nedir? (Anlamını yazın)</p>
+        <textarea id="text26" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(26)">Kontrol Et</button>
+        <span id="feedback26"></span>
+    </div>
+
+    <div class="question">
+        <p>27. Sadaka aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q27" value="a"> a) Gönüllü yardım<br>
+            <input type="radio" name="q27" value="b"> b) Zorunlu ibadet<br>
+            <input type="radio" name="q27" value="c"> c) Nisab miktarı<br>
+            <input type="radio" name="q27" value="d"> d) Fitre
+        </div>
+        <button onclick="checkAnswer(27)">Kontrol Et</button>
+        <span id="feedback27"></span>
+    </div>
+
+    <div class="question">
+        <p>28. İnfak nedir? (Anlamını yazın)</p>
+        <textarea id="text28" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(28)">Kontrol Et</button>
+        <span id="feedback28"></span>
+    </div>
+
+    <div class="question">
+        <p>29. Nisab aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q29" value="a"> a) Zekât vermek için gereken minimum mal miktarı<br>
+            <input type="radio" name="q29" value="b"> b) Sadaka türü<br>
+            <input type="radio" name="q29" value="c"> c) Cimrilik<br>
+            <input type="radio" name="q29" value="d"> d) Bereket
+        </div>
+        <button onclick="checkAnswer(29)">Kontrol Et</button>
+        <span id="feedback29"></span>
+    </div>
+
+    <div class="question">
+        <p>30. Fitre (Sadaka-i Fıtr) nedir? (Anlamını yazın)</p>
+        <textarea id="text30" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(30)">Kontrol Et</button>
+        <span id="feedback30"></span>
+    </div>
+
+    <div class="question">
+        <p>31. Sadaka-i Cariye aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q31" value="a"> a) Sürekli sevap veren sadaka<br>
+            <input type="radio" name="q31" value="b"> b) Zekât<br>
+            <input type="radio" name="q31" value="c"> c) İnfak<br>
+            <input type="radio" name="q31" value="d"> d) Nisab
+        </div>
+        <button onclick="checkAnswer(31)">Kontrol Et</button>
+        <span id="feedback31"></span>
+    </div>
+
+    <div class="question">
+        <p>32. Müellefe-i Kulûb nedir? (Anlamını yazın)</p>
+        <textarea id="text32" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(32)">Kontrol Et</button>
+        <span id="feedback32"></span>
+    </div>
+
+    <div class="question">
+        <p>33. Fakir aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q33" value="a"> a) İhtiyacı olan ancak çalışabilen kişi<br>
+            <input type="radio" name="q33" value="b"> b) Çalışamayan yoksul<br>
+            <input type="radio" name="q33" value="c"> c) Yolcu<br>
+            <input type="radio" name="q33" value="d"> d) Borçlu
+        </div>
+        <button onclick="checkAnswer(33)">Kontrol Et</button>
+        <span id="feedback33"></span>
+    </div>
+
+    <div class="question">
+        <p>34. Miskin nedir? (Anlamını yazın)</p>
+        <textarea id="text34" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(34)">Kontrol Et</button>
+        <span id="feedback34"></span>
+    </div>
+
+    <div class="question">
+        <p>35. İbn-i Sebil aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q35" value="a"> a) Yolcu<br>
+            <input type="radio" name="q35" value="b"> b) Köle<br>
+            <input type="radio" name="q35" value="c"> c) Amil<br>
+            <input type="radio" name="q35" value="d"> d) Fîsebilillah
+        </div>
+        <button onclick="checkAnswer(35)">Kontrol Et</button>
+        <span id="feedback35"></span>
+    </div>
+
+    <div class="question">
+        <p>36. Rikab nedir? (Anlamını yazın)</p>
+        <textarea id="text36" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(36)">Kontrol Et</button>
+        <span id="feedback36"></span>
+    </div>
+
+    <div class="question">
+        <p>37. Garimin aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q37" value="a"> a) Borçlular<br>
+            <input type="radio" name="q37" value="b"> b) Fakirler<br>
+            <input type="radio" name="q37" value="c"> c) Yolcular<br>
+            <input type="radio" name="q37" value="d"> d) Köleler
+        </div>
+        <button onclick="checkAnswer(37)">Kontrol Et</button>
+        <span id="feedback37"></span>
+    </div>
+
+    <div class="question">
+        <p>38. Fîsebilillah nedir? (Anlamını yazın)</p>
+        <textarea id="text38" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(38)">Kontrol Et</button>
+        <span id="feedback38"></span>
+    </div>
+
+    <div class="question">
+        <p>39. Amil aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q39" value="a"> a) Zekât toplayıcılar<br>
+            <input type="radio" name="q39" value="b"> b) Müellefe-i Kulûb<br>
+            <input type="radio" name="q39" value="c"> c) Sadaka-i Cariye<br>
+            <input type="radio" name="q39" value="d"> d) İnfak
+        </div>
+        <button onclick="checkAnswer(39)">Kontrol Et</button>
+        <span id="feedback39"></span>
+    </div>
+
+    <div class="question">
+        <p>40. Cimrilik nedir? (Anlamını yazın)</p>
+        <textarea id="text40" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(40)">Kontrol Et</button>
+        <span id="feedback40"></span>
+    </div>
+
+    <div class="question">
+        <p>41. İsraf aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q41" value="a"> a) Gereksiz harcama<br>
+            <input type="radio" name="q41" value="b"> b) Paylaşma<br>
+            <input type="radio" name="q41" value="c"> c) Bereket<br>
+            <input type="radio" name="q41" value="d"> d) Arınma
+        </div>
+        <button onclick="checkAnswer(41)">Kontrol Et</button>
+        <span id="feedback41"></span>
+    </div>
+
+    <div class="question">
+        <p>42. Rızk nedir? (Anlamını yazın)</p>
+        <textarea id="text42" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(42)">Kontrol Et</button>
+        <span id="feedback42"></span>
+    </div>
+
+    <div class="question">
+        <p>43. Bereket aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q43" value="a"> a) Bolluk, verimlilik<br>
+            <input type="radio" name="q43" value="b"> b) Cimrilik<br>
+            <input type="radio" name="q43" value="c"> c) İsraf<br>
+            <input type="radio" name="q43" value="d"> d) Nisab
+        </div>
+        <button onclick="checkAnswer(43)">Kontrol Et</button>
+        <span id="feedback43"></span>
+    </div>
+
+    <div class="question">
+        <p>44. Arınma nedir? (Anlamını yazın)</p>
+        <textarea id="text44" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(44)">Kontrol Et</button>
+        <span id="feedback44"></span>
+    </div>
+
+    <div class="question">
+        <p>45. Paylaşma aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q45" value="a"> a) Malı başkalarıyla bölüşmek<br>
+            <input type="radio" name="q45" value="b"> b) Cimrilik yapmak<br>
+            <input type="radio" name="q45" value="c"> c) İsraf etmek<br>
+            <input type="radio" name="q45" value="d"> d) Sadaka-i Cariye
+        </div>
+        <button onclick="checkAnswer(45)">Kontrol Et</button>
+        <span id="feedback45"></span>
+    </div>
+
+    <div class="question">
+        <p>46. Yardımlaşma nedir? (Anlamını yazın)</p>
+        <textarea id="text46" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(46)">Kontrol Et</button>
+        <span id="feedback46"></span>
+    </div>
+
+    <div class="question">
+        <p>47. Kardeşlik aşağıdakilerden hangisidir?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q47" value="a"> a) Müminler arasında birlik<br>
+            <input type="radio" name="q47" value="b"> b) Zekât vermemek<br>
+            <input type="radio" name="q47" value="c"> c) Nisab miktarı<br>
+            <input type="radio" name="q47" value="d"> d) Fitre
+        </div>
+        <button onclick="checkAnswer(47)">Kontrol Et</button>
+        <span id="feedback47"></span>
+    </div>
+
+    <div class="question">
+        <p>48. Zekâtın Verileceği Yerler nedir? (Anlamını yazın)</p>
+        <textarea id="text48" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(48)">Kontrol Et</button>
+        <span id="feedback48"></span>
+    </div>
+
+    <div class="question">
+        <p>49. Sadakanın Faydaları aşağıdakilerden hangisini ifade eder?</p>
+        <div class="multiple-choice">
+            <input type="radio" name="q49" value="a"> a) Toplumsal dayanışma, arınma<br>
+            <input type="radio" name="q49" value="b"> b) Cimriliği artırma<br>
+            <input type="radio" name="q49" value="c"> c) İsrafı teşvik<br>
+            <input type="radio" name="q49" value="d"> d) Bereketi azaltma
+        </div>
+        <button onclick="checkAnswer(49)">Kontrol Et</button>
+        <span id="feedback49"></span>
+    </div>
+
+    <div class="question">
+        <p>50. İslam'da Paylaşma ve Yardımlaşma nedir? (Anlamını yazın)</p>
+        <textarea id="text50" rows="2" cols="50"></textarea>
+        <button onclick="checkAnswer(50)">Kontrol Et</button>
+        <span id="feedback50"></span>
+    </div>
+
+</body>
+</html>
